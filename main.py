@@ -1,28 +1,42 @@
 import RPi.GPIO as GPIO
 import time
 
-# Configurar el modo de numeración de los pines
-GPIO.setmode(GPIO.BCM)
+class RelayController:
+    def __init__(self, relay_pin_one, relay_pin_two):
+        self.relay_pin_one = relay_pin_one
+        self.relay_pin_two = relay_pin_two
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.relay_pin_one, GPIO.OUT)
+        GPIO.setup(self.relay_pin_two, GPIO.OUT)
 
-# Definir el pin GPIO al que está conectado el relay
-relay_pin = 21 # or pin 40
-relay_pin_two = 20 # or pin 38
+    def turn_on_relay_one(self, duration):
+        GPIO.output(self.relay_pin_one, GPIO.LOW)
+        print("Relay one turned on")
+        time.sleep(duration)
+        GPIO.output(self.relay_pin_one, GPIO.HIGH)
+        print("Relay one turned off")
 
-# Configurar el pin como salida
-GPIO.setup(relay_pin, GPIO.OUT)
-GPIO.setup(relay_pin_two, GPIO.OUT)
+    def turn_on_relay_two(self, duration):
+        GPIO.output(self.relay_pin_two, GPIO.LOW)
+        print("Relay two turned on")
+        time.sleep(duration)
+        GPIO.output(self.relay_pin_two, GPIO.HIGH)
+        print("Relay two turned off")
 
-try:
-    # Encender el relay
-    GPIO.output(relay_pin, GPIO.LOW)
-    GPIO.output(relay_pin_two, GPIO.LOW)
-    print("Relay encendido")
-    time.sleep(10)  # Mantener el relay encendido por 5 segundos
+    def cleanup(self):
+        GPIO.cleanup()
 
-    # Apagar el relay
-    GPIO.output(relay_pin, GPIO.HIGH)
-    GPIO.output(relay_pin_two, GPIO.HIGH)
-    print("Relay apagado")
-finally:
-    # Limpiar la configuración de los pines GPIO
-    GPIO.cleanup()
+if __name__ == "__main__":
+    relay_controller = RelayController(
+        relay_pin_one=17,  # GPIO17
+        relay_pin_two=27   # GPIO27
+    )
+    try:
+        relay_controller.turn_on_relay_one(
+            duration=5
+        )
+        relay_controller.turn_on_relay_two(
+            duration=5
+        )
+    finally:
+        relay_controller.cleanup()
