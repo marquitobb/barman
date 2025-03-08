@@ -68,3 +68,12 @@ barman/
     3.4. repeat the process with other motors
 
 4. finish the drink
+
+### install pyaudio on mac
+
+```bash
+pip install SpeechRecognition
+pip install PyAudio
+brew install portaudio
+pip install PyAudio --global-option="build_ext" --global-option="-I/opt/homebrew/include" --global-option="-L/opt/homebrew/lib"
+```

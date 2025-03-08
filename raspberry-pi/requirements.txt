@@ -2,6 +2,13 @@
 # RPi.GPIO>=0.7.0
 pvporcupine
 requests
-openai-whisper
+
+# reconigtion voice
+#openai-whisper
+whisper
 pyttsx3
 sounddevice
+
+# reconigtion command voice
+SpeechRecognition
+PyAudio

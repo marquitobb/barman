@@ -1,42 +1,32 @@
-import RPi.GPIO as GPIO
-import time
+from voice.voice_commands import VoiceCommands  # Cambiado de .voice a voice
 
-class RelayController:
-    def __init__(self, relay_pin_one, relay_pin_two):
-        self.relay_pin_one = relay_pin_one
-        self.relay_pin_two = relay_pin_two
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.relay_pin_one, GPIO.OUT)
-        GPIO.setup(self.relay_pin_two, GPIO.OUT)
 
-    def turn_on_relay_one(self, duration):
-        GPIO.output(self.relay_pin_one, GPIO.LOW)
-        print("Relay one turned on")
-        time.sleep(duration)
-        GPIO.output(self.relay_pin_one, GPIO.HIGH)
-        print("Relay one turned off")
+def init_barman():
+    print("Iniciando el asistente de voz...")
+    print("Di 'barman' para activar el asistente.")
 
-    def turn_on_relay_two(self, duration):
-        GPIO.output(self.relay_pin_two, GPIO.LOW)
-        print("Relay two turned on")
-        time.sleep(duration)
-        GPIO.output(self.relay_pin_two, GPIO.HIGH)
-        print("Relay two turned off")
+    while True:
+        try:
+            # Initialize the voice commands
+            voice_commands = VoiceCommands()
+            audio = voice_commands.listen_audio(phrase_limit=3)
+            text = voice_commands.recognize_speech(audio)
 
-    def cleanup(self):
-        GPIO.cleanup()
+            # validate the keyword voice
+            if text and any(keyword in text for keyword in ["barman", "bar man", "batman"]):
+                print("\n¡Palabra clave detectada!")
+                print("fin...")
+                break
 
+        except KeyboardInterrupt:
+            print("\nPrograma finalizado.")
+            break
+        except Exception as e:
+            print(f"Error: {e}")
+
+
+
+# main
 if __name__ == "__main__":
-    relay_controller = RelayController(
-        relay_pin_one=17,  # GPIO17
-        relay_pin_two=27   # GPIO27
-    )
-    try:
-        relay_controller.turn_on_relay_one(
-            duration=5
-        )
-        relay_controller.turn_on_relay_two(
-            duration=5
-        )
-    finally:
-        relay_controller.cleanup()
+    # Initialize the voice commands
+    init_barman()
