@@ -1,0 +1,7 @@
+# TODO: descoment this line after test
+# RPi.GPIO>=0.7.0
+pvporcupine
+requests
+openai-whisper
+pyttsx3
+sounddevice

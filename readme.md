@@ -32,3 +32,39 @@ barman/
     ├── models/              # Modelos de datos comunes
     └── utils/               # Utilidades comunes
 ```
+
+## how works the bot?
+
+**steps**
+
+1. call his name (barman)
+
+    1.1. barman ask for the drink (what do you want to drink?)
+
+    1.2. user say the drink (margarita please)
+
+    1.3. barman ask for the size (what size do you want?)
+
+    1.4. user say the size (medium)
+
+2. prepare the drink
+
+    2.1. barman check motor one where is the tequila
+
+    2.2. barman check motor two where is the soda "squirt"
+
+    2.3. barman check motor three where is the lemon
+
+3. serve the drink
+
+    3.1. barman serve the drink in a glass
+
+    3.2 barman with camera check the glass if is empty or not
+
+    3.3 barman serve the drink
+
+    3.3. barman check the glass if is full
+
+    3.4. repeat the process with other motors
+
+4. finish the drink
