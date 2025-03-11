@@ -8,6 +8,7 @@ requests
 whisper
 pyttsx3
 sounddevice
+scipy
 
 # reconigtion command voice
 SpeechRecognition

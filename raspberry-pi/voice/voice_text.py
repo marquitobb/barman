@@ -12,8 +12,8 @@ class VoiceTextProcessor:
     def record_audio(self):
         print(f"Recording for {self.duration} seconds...")
         audio = sd.rec(int(self.sample_rate * self.duration), samplerate=self.sample_rate, channels=1, dtype="int16")
-        sd.wait()  # Wait until the recording is finished
-        write(self.output_file, self.sample_rate, audio)  # Save as WAV file
+        sd.wait()
+        write(self.output_file, self.sample_rate, audio)
         print(f"Recording saved to {self.output_file}")
 
     def transcribe_audio(self, file_path):
@@ -28,7 +28,6 @@ class VoiceTextProcessor:
     def text_to_speech_spanish(self, text, voice_name=""):
         engine = pyttsx3.init()
 
-        # Set a specific voice (e.g., for Spanish)
         voices = engine.getProperty("voices")
         for voice in voices:
             if voice_name.lower() in voice.name.lower():
@@ -37,6 +36,7 @@ class VoiceTextProcessor:
                 break
         engine.say(text)
         engine.runAndWait()
+
 
 if __name__ == "__main__":
     processor = VoiceTextProcessor()

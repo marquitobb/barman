@@ -2,6 +2,8 @@
 
 Bot as a service to make drinks
 
+![alt text](steps.png)
+
 ## Posible arquitecture
 
 ```

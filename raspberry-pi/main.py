@@ -1,4 +1,8 @@
-from voice.voice_commands import VoiceCommands  # Cambiado de .voice a voice
+# listen the voice commands and execute the actions
+from voice.voice_commands import VoiceCommands
+
+# convert voice to text and text to voice
+from voice.voice_text import VoiceTextProcessor
 
 
 def init_barman():
@@ -14,6 +18,11 @@ def init_barman():
 
             # validate the keyword voice
             if text and any(keyword in text for keyword in ["barman", "bar man", "batman"]):
+                processor = VoiceTextProcessor()
+                processor.record_audio()
+                text_from_audio = processor.transcribe_audio(processor.output_file)
+                processor.text_to_speech_spanish(text_from_audio, voice_name="Spanish")
+
                 print("\n¡Palabra clave detectada!")
                 print("fin...")
                 break
