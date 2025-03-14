@@ -10,9 +10,9 @@
 - [ ] agregar detectar comando de voz
 - [ ] Implementar la lógica para el control de los motores.
 - [ ] Agregar manejo de errores robusto.
-- [ ] Implementar la comunicación con la API de `brain-ia`.
+- [ ] Implementar la comunicación con la API de `server-ia`.
 
-## brain-ia/
+## server-ia/
 
 - [ ] Implementar la lógica para la selección de ingredientes basada en el tamaño de la bebida.
 - [ ] Mejorar la precisión de la interpretación de comandos en lenguaje natural.
@@ -26,5 +26,5 @@
 
 ## shared/
 
-- [ ] Definir modelos de datos comunes para la comunicación entre `raspberry-pi` y `brain-ia`.
+- [ ] Definir modelos de datos comunes para la comunicación entre `raspberry-pi` y `server-ia`.
 - [ ] Implementar utilidades para el manejo de errores y logs.

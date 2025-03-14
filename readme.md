@@ -18,7 +18,7 @@ barman/
 │   │   └── models.py
 │   └── config.py            # Configuración
 │
-├── brain-ia/                # Servicio de IA
+├── server-ia/                # Servicio de IA
 │   ├── main.py              # Aplicación FastAPI
 │   ├── api/                 # Endpoints de la API
 │   │   ├── routes.py

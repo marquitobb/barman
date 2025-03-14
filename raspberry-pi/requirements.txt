@@ -1,14 +1,17 @@
 # TODO: descoment this line after test
-# RPi.GPIO>=0.7.0
-pvporcupine
-requests
-
 # reconigtion voice
 #openai-whisper
+tqdm==4.66.4
 whisper
 pyttsx3
 sounddevice
 scipy
+
+
+# GPIO for raspberry pi
+# RPi.GPIO>=0.7.0
+pvporcupine
+requests
 
 # reconigtion command voice
 SpeechRecognition
