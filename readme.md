@@ -18,7 +18,7 @@ barman/
 │   │   └── models.py
 │   └── config.py            # Configuración
 │
-├── server-ia/                # Servicio de IA
+├── server-ai/                # Servicio de IA
 │   ├── main.py              # Aplicación FastAPI
 │   ├── api/                 # Endpoints de la API
 │   │   ├── routes.py
@@ -79,3 +79,15 @@ pip install PyAudio
 brew install portaudio
 pip install PyAudio --global-option="build_ext" --global-option="-I/opt/homebrew/include" --global-option="-L/opt/homebrew/lib"
 ```
+
+## TODO List
+
+### server-ai
+
+- [ ] Add endpoints to the API (server-ai)
+  - [ ] POST /drinks where send text request and return steps to prepare the drink with the motors time to run
+
+### raspberry-pi
+
+- [ ] Add endpoints to the API (raspberry-pi)
+  - [ ] POST /drinks where send steps to prepare the drink with the motors time to run

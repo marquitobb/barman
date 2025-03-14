@@ -1,4 +1,4 @@
-# barman (server-ia)
+# barman (server-ai)
 
 ## Description
 
@@ -7,8 +7,8 @@ This is a simple project to demonstrate the use of a simple neural network to pr
 ## Installation with conda
 
 ```bash
-conda create -n server-ia python=3.9
-conda activate server-ia
+conda create -n server-ai python=3.9
+conda activate server-ai
 pip install -r requirements.txt
 ```
 

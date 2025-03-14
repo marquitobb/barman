@@ -21,7 +21,8 @@ def init_barman():
                 processor = VoiceTextProcessor()
                 processor.record_audio()
                 text_from_audio = processor.transcribe_audio(processor.output_file)
-                processor.text_to_speech_spanish(text_from_audio, voice_name="Spanish")
+                print(f"Texto: {text_from_audio}")
+                # processor.text_to_speech_spanish(text_from_audio, voice_name="Spanish")
 
                 print("\n¡Palabra clave detectada!")
                 print("fin...")
