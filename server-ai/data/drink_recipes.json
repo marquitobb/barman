@@ -1,0 +1,40 @@
+{
+  "base_drinks": {
+    "tequila_shot": {
+      "name": "Shot de Tequila",
+      "description": "Tequila puro para tomar directo",
+      "ingredients": [
+        {"name": "Tequila", "percentage": 100.0}
+      ]
+    },
+    "margarita": {
+      "name": "Margarita",
+      "description": "Cóctel clásico mexicano a base de tequila, limón y triple sec",
+      "ingredients": [
+        {"name": "Tequila", "percentage": 60.0},
+        {"name": "Jugo de limón", "percentage": 30.0},
+        {"name": "Triple sec", "percentage": 10.0}
+      ]
+    },
+    "paloma": {
+      "name": "Paloma",
+      "description": "Cóctel refrescante de tequila y refresco de toronja",
+      "ingredients": [
+        {"name": "Tequila", "percentage": 30.0},
+        {"name": "Refresco de toronja", "percentage": 60.0},
+        {"name": "Jugo de limón", "percentage": 10.0}
+      ]
+    },
+    "vampiro": {
+      "name": "Vampiro",
+      "description": "Cóctel mexicano picante con tequila y jugo de tomate",
+      "ingredients": [
+        {"name": "Tequila", "percentage": 40.0},
+        {"name": "Jugo de tomate", "percentage": 30.0},
+        {"name": "Jugo de naranja", "percentage": 15.0},
+        {"name": "Jugo de limón", "percentage": 10.0},
+        {"name": "Salsa picante", "percentage": 5.0}
+      ]
+    }
+  }
+}

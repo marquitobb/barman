@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from api.routes import router
+from db.database import init_db
 
 app = FastAPI(
     title="Barman Brain API",
@@ -8,7 +9,17 @@ app = FastAPI(
     version="0.1.3"
 )
 
-app.include_router(router)
+@app.get("/barman")
+async def root():
+    return {"message": "Welcome to the Barman Brain API!"}
+
+# Inicializar la base de datos al arrancar la aplicación
+@app.on_event("startup")
+async def startup_db_client():
+    init_db()
+    print("Base de datos inicializada")
+
+app.include_router(router, prefix="/barman")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
