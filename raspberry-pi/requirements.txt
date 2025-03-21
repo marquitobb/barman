@@ -12,6 +12,7 @@ scipy
 # RPi.GPIO>=0.7.0
 pvporcupine
 requests
+pydantic
 
 # reconigtion command voice
 SpeechRecognition
