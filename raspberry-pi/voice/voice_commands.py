@@ -6,8 +6,10 @@ class VoiceCommands:
 
     def listen_audio(self, timeout=None, phrase_limit=None):
         """Función auxiliar para escuchar audio del micrófono"""
-        with sr.Microphone() as source:
-            self.recognizer.adjust_for_ambient_noise(source, duration=0.5)
+        with sr.Microphone(device_index=0) as source:
+            print("Ajustando para ruido ambiental...")
+            self.recognizer.adjust_for_ambient_noise(source, duration=1.0)
+            print("Escuchando...")
             return self.recognizer.listen(source, timeout=timeout, phrase_time_limit=phrase_limit)
 
     def recognize_speech(self, audio):
