@@ -18,6 +18,10 @@ class VoiceCommands:
             print("Dispositivos de micrófono disponibles:")
             for index, name in enumerate(sr.Microphone.list_microphone_names()):
                 print(f"Índice {index}: {name}")
+                # Priorizar el micrófono Razer Seiren Mini
+                if "Razer Seiren Mini" in name:
+                    print(f"¡Encontrado Razer Seiren Mini en índice {index}!")
+                    return [index]  # Devolver solo este dispositivo
                 devices.append(index)
             return devices
         except Exception as e:
