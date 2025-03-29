@@ -1,5 +1,5 @@
 # voice
-from voice.voice_commands import VoiceCommands
+import sys
 from voice.voice_text import VoiceTextProcessor
 
 # controllers
@@ -31,22 +31,20 @@ def process_drink_request(
 
     return response
 
-def init_barman():
+def init_barman(voice_handler):
     print("Iniciando el asistente de voz...")
     print("Di 'barman' para activar el asistente.")
 
     while True:
         try:
-            # Initialize the voice commands
-            voice_commands = VoiceCommands()
-            audio = voice_commands.listen_audio(phrase_limit=3)
+            audio = voice_handler.listen_audio(phrase_limit=3)
             if audio is None:
                 print("No se pudo capturar audio. Usando alternativas...")
                 # Puedes implementar un modo alternativo aquí, como usar texto predefinido
                 processor = VoiceTextProcessor()
                 processor.text_to_speech_spanish("No puedo escucharte, necesitas conectar un micrófono USB.", voice_name="Spanish")
                 continue
-            text = voice_commands.recognize_speech(audio)
+            text = voice_handler.recognize_speech(audio)
 
             # validate the keyword voice
             if text and any(keyword in text for keyword in ["barman", "bar man", "batman"]):
@@ -75,9 +73,19 @@ def init_barman():
         except Exception as e:
             print(f"Error: {e}")
 
+def main():
+    use_simple_voice = "--simple" in sys.argv
+    
+    if use_simple_voice:
+        from voice.voice_commands_simple import SimpleVoiceCommands
+        voice_handler = SimpleVoiceCommands()
+    else:
+        from voice.voice_commands import VoiceCommands
+        voice_handler = VoiceCommands()
+    
+    init_barman(voice_handler)
+
 # main
 if __name__ == "__main__":
-    # Initialize the voice commands
-    init_barman()
-    # drink_data = process_drink_request("quiero una margarita")
+    main()
 
