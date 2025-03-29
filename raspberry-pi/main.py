@@ -40,6 +40,12 @@ def init_barman():
             # Initialize the voice commands
             voice_commands = VoiceCommands()
             audio = voice_commands.listen_audio(phrase_limit=3)
+            if audio is None:
+                print("No se pudo capturar audio. Usando alternativas...")
+                # Puedes implementar un modo alternativo aquí, como usar texto predefinido
+                processor = VoiceTextProcessor()
+                processor.text_to_speech_spanish("No puedo escucharte, necesitas conectar un micrófono USB.", voice_name="Spanish")
+                continue
             text = voice_commands.recognize_speech(audio)
 
             # validate the keyword voice
