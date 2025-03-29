@@ -15,8 +15,7 @@ class MotorController:
         # Define the flow rate for each device in ml/second
         self.flow_rates = {
             "relay_one": 20.0,   # 20 ml per second for relay one (tequila)
-            "relay_two": 25.0,   # 25 ml per second for relay two (whisky)
-            "relay_three": 30.0  # 30 ml per second for relay three (soda)
+            "relay_two": 30.0    # 30 ml per second for relay two (soda)
         }
 
     def ml_to_seconds(self, ml: float, device: str) -> float:
@@ -66,6 +65,9 @@ class MotorController:
             print(f"Text: {text}")
             ingredients = text.get("ingredients")
             for ingredient in ingredients:
+                # Si el dispositivo es relay_three, cambiarlo a relay_two
+                if ingredient.get('device') == 'relay_three':
+                    ingredient['device'] = 'relay_two'
                 self.create_drink(ingredient)
             return True
         except Exception as e:
@@ -91,6 +93,9 @@ class MotorController:
 
         # Get the device from drink_data
         device = drink_data.get('device')
+        # Si el dispositivo es relay_three, cambiarlo a relay_two
+        if device == 'relay_three':
+            device = 'relay_two'
 
         # convert milliliters to seconds
         seconds = self.ml_to_seconds(amount_ml, device)

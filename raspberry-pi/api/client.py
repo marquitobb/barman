@@ -8,7 +8,7 @@ class ApiClient:
 
     def __init__(
         self,
-        base_url: str = "http://localhost:8000"
+        base_url: str = "http://192.168.1.91:8000"
     ):
         self.base_url = base_url
         self.headers = {

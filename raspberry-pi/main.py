@@ -72,8 +72,6 @@ def init_barman():
 # main
 if __name__ == "__main__":
     # Initialize the voice commands
-    # TODO: descoment after testing
-    # init_barman()
-    drink_data = process_drink_request("quiero una margarita")
-    print(drink_data)
+    init_barman()
+    # drink_data = process_drink_request("quiero una margarita")
 
