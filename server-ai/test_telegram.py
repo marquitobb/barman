@@ -22,7 +22,6 @@ model = None
 class TelegramBot:
     def __init__(self, api_url="http://localhost:8000"):
         # self.token = os.getenv("TELEGRAM_BOT_TOKEN")
-        self.token = "7848848906:AAEQUGOWwABZJbsQZdGLrd7WI5FO-LTfR1g"
         if not self.token:
             raise ValueError("No se encontró el token de Telegram en las variables de entorno")
 
