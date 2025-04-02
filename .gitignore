@@ -8,3 +8,4 @@
 *.cpython
 *.pyo
 *.pyd
+*.env
