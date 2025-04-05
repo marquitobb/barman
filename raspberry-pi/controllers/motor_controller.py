@@ -1,12 +1,10 @@
 from controllers.relay_controller import RelayController
-from api.client import ApiClient
 import time
 import requests
 
 class MotorController:
 
     def __init__(self):
-        self.api_client = ApiClient()
         # Initialize the relay controller
         self.relay_controller = RelayController(
             relay_pin_one=17,  # GPIO17

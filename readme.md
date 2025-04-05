@@ -2,38 +2,51 @@
 
 Bot as a service to make drinks
 
-![alt text](steps.png)
+![alt text](steps.jpg)
+
+![alt text](call.PNG)
 
 ## Posible arquitecture
 
 ```
 barman/
-├── raspberry-pi/            # Código para el control de hardware
-│   ├── main.py              # Punto de entrada principal
-│   ├── controllers/         # Controladores de hardware
+├── raspberry-pi/            # Hardware control code
+│   ├── main.py              # Main entry point
+│   ├── controllers/         # Hardware controllers
 │   │   ├── relay_controller.py
 │   │   └── motor_controller.py
-│   ├── api/                 # Cliente API para comunicación
+│   ├── api/                 # API client for communication
 │   │   ├── client.py
 │   │   └── models.py
-│   └── config.py            # Configuración
+│   └── config.py            # Configuration
 │
-├── server-ai/                # Servicio de IA
-│   ├── main.py              # Aplicación FastAPI
-│   ├── api/                 # Endpoints de la API
+├── server-ai/               # AI Service
+│   ├── main.py              # FastAPI application
+│   ├── api/                 # API endpoints
 │   │   ├── routes.py
 │   │   └── models.py
-│   ├── agents/              # Agentes de IA
+│   ├── agents/              # AI agents
 │   │   ├── ollama_agent.py
 │   │   └── llama3_agent.py
-│   ├── services/            # Servicios de negocio
+│   ├── services/            # Business services
 │   │   └── drink_service.py
-│   └── config.py            # Configuración
+│   └── config.py            # Configuration
 │
-└── shared/                  # Código compartido
-    ├── models/              # Modelos de datos comunes
-    └── utils/               # Utilidades comunes
+└── shared/                  # Shared code
+    ├── models/              # Common data models
+    └── utils/               # Common utilities
 ```
+
+## Flujo de comunicación
+
+1. **Usuario → Bot de Telegram**: El usuario envía un mensaje solicitando una bebida
+2. **Telegram Bot → OllamaAgent**: El mensaje se procesa para generar instrucciones
+3. **OllamaAgent → RaspberryPiClient**: Se envían los ingredientes con sus porcentajes
+4. **RaspberryPiClient → Raspberry Pi API**: Se realiza una petición HTTP a la Raspberry
+5. **Raspberry Pi → MotorController**: Se activan los motores/relés según los ingredientes
+6. **MotorController → Dispositivos físicos**: Los relés activan las bombas para servir la bebida
+
+Esta arquitectura muestra claramente la separación entre el servidor de IA (con bot de Telegram e inteligencia artificial) y la Raspberry Pi (que controla el hardware), con comunicación vía HTTP.
 
 ## how works the bot?
 
