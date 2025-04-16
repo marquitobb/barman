@@ -28,15 +28,15 @@ class RelayController:
 
 if __name__ == "__main__":
     relay_controller = RelayController(
-        relay_pin_one=17,  # GPIO17
-        relay_pin_two=27   # GPIO27
+        relay_pin_one=20,  # GPIO20
+        relay_pin_two=17   # GPIO17
     )
     try:
         relay_controller.turn_on_relay_one(
-            duration=5
+            duration=7
         )
         relay_controller.turn_on_relay_two(
-            duration=5
+            duration=7
         )
     finally:
         relay_controller.cleanup()

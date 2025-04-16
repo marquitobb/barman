@@ -7,8 +7,8 @@ class MotorController:
     def __init__(self):
         # Initialize the relay controller
         self.relay_controller = RelayController(
-            relay_pin_one=17,  # GPIO17
-            relay_pin_two=27   # GPIO27
+            relay_pin_one=20,  # GPIO20
+            relay_pin_two=17   # GPIO17
         )
         # Define the flow rate for each device in ml/second
         self.flow_rates = {
