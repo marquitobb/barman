@@ -7,6 +7,7 @@ import threading
 from controllers.motor_controller import MotorController
 from dotenv import load_dotenv
 from telegram_api.bot import TelegramBot
+from contextlib import asynccontextmanager
 
 # models
 from models import (
@@ -18,11 +19,32 @@ from models import (
 # Cargar variables de entorno
 load_dotenv()
 
+@asynccontextmanager
+async def lifespan(app):
+    # Código que se ejecutaba en startup_event
+    global telegram_bot
+    try:
+        telegram_bot = TelegramBot()
+        bot_thread = threading.Thread(target=telegram_bot.start)
+        bot_thread.daemon = True
+        bot_thread.start()
+        print("Bot de Telegram iniciado correctamente")
+    except Exception as e:
+        print(f"Error al iniciar el bot de Telegram: {e}")
+    
+    yield  # Aquí la aplicación se ejecuta
+    
+    # Código que se ejecutaba en shutdown_event
+    if telegram_bot:
+        telegram_bot.stop()
+        print("Bot de Telegram detenido")
+
 # Create FastAPI application
 app = FastAPI(
     title="Barman Raspberry Pi API",
     description="API para controlar motores y relés GPIO en la Raspberry Pi",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan
 )
 
 # Initialize controllers
@@ -66,31 +88,6 @@ async def make_drink(request: DrinkRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Función que se ejecuta al iniciar la aplicación"""
-    # Inicializar el bot de Telegram si está disponible y el token está presente
-    global telegram_bot
-    try:
-        telegram_bot = TelegramBot()
-        # Iniciar el bot en un hilo separado
-        bot_thread = threading.Thread(target=telegram_bot.start)
-        bot_thread.daemon = True  # El hilo se cerrará cuando termine el programa principal
-        bot_thread.start()
-        print("Bot de Telegram iniciado correctamente")
-    except Exception as e:
-        print(f"Error al iniciar el bot de Telegram: {e}")
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Función que se ejecuta al detener la aplicación"""
-    global telegram_bot
-    if telegram_bot:
-        telegram_bot.stop()
-        print("Bot de Telegram detenido")
 
 
 def main():

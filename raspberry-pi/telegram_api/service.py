@@ -107,3 +107,75 @@ class TelegramService:
                 "Lo siento, ha ocurrido un error al procesar tu solicitud. Por favor, inténtalo de nuevo."
             )
 
+    def process_audio_file(self, update: Update, audio_path: str):
+        """Envía el archivo de audio al servidor AI para transcripción y procesamiento."""
+        try:
+            # Abrir el archivo en modo binario
+            with open(audio_path, 'rb') as audio_file:
+                # Crear un diccionario con los archivos a enviar
+                files = {'audio': audio_file}
+
+                # Realizar la solicitud al endpoint de audio del servidor AI
+                response = requests.post(
+                    f"{self.server_ai_url}/barman/audio",
+                    files=files,
+                    timeout=60  # Mayor timeout para subir archivos
+                )
+
+                # Verificar si la solicitud fue exitosa
+                if response.status_code != 200:
+                    logger.error(f"Error en la API: {response.status_code} - {response.text}")
+                    update.message.reply_text(
+                        f"Lo siento, el servidor de IA no pudo procesar tu audio (Error {response.status_code})."
+                    )
+                    return
+
+                # Procesar la respuesta igual que con texto
+                api_response = response.json()
+
+                # Continuar con el procesamiento de la bebida como antes...
+                # Extraemos los datos de la bebida
+                drink_data = {
+                    "name": api_response.get("name"),
+                    "description": api_response.get("description"),
+                    "ingredients": api_response.get("ingredients", [])
+                }
+
+                # Format the response for Telegram
+                message = f"🍹 *{drink_data['name']}*\n\n"
+                message += f"{drink_data['description']}\n\n"
+                message += "*Ingredientes:*\n"
+
+                for ingredient in drink_data['ingredients']:
+                    message += f"• {ingredient['name']}: {ingredient['percentage']}%\n"
+
+                # Send the drink information
+                update.message.reply_text(
+                    message,
+                    parse_mode='Markdown'
+                )
+
+                # Inform that the drink is being prepared
+                update.message.reply_text("¡Tu bebida se está preparando! 🍹")
+
+                # Preparar la bebida directamente usando el motor_controller
+                success = self.motor_controller.process_drink_request({
+                    "ingredients": drink_data['ingredients']
+                })
+
+                if success:
+                    update.message.reply_text("✅ La bebida ha sido preparada correctamente.")
+                else:
+                    update.message.reply_text("❌ Error preparando la bebida.")
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error de conexión con el servidor de IA: {e}")
+            update.message.reply_text(
+                "Lo siento, no pude conectar con el servidor de IA. Por favor, inténtalo de nuevo más tarde."
+            )
+        except Exception as e:
+            logger.error(f"Error procesando la solicitud: {e}")
+            update.message.reply_text(
+                "Lo siento, ha ocurrido un error al procesar tu solicitud. Por favor, inténtalo de nuevo."
+            )
+

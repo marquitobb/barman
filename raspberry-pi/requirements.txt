@@ -1,16 +1,19 @@
 # TODO: descoment this line after test
 # reconigtion voice
 tqdm==4.66.4
-whisper
-python-telegram-bot==13.15
-dotenv
-
-# GPIO for raspberry pi
-# RPi.GPIO>=0.7.0
-requests
-pydantic
-
 
 # API REST
 fastapi>=0.68.0
 uvicorn>=0.15.0
+python-multipart>=0.0.5
+
+# Telegram Bot
+python-telegram-bot==13.15
+python-dotenv>=1.0.0
+
+# Comunicación
+requests>=2.25.0
+pydantic>=1.8.0
+
+# GPIO para raspberry pi (descomentar para producción)
+# RPi.GPIO>=0.7.0

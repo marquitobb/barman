@@ -5,16 +5,12 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from dotenv import load_dotenv
 from .service import TelegramService
-import whisper
 
 # Configurar logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
 logger = logging.getLogger(__name__)
-
-# Modelo Whisper para transcripción
-model = None
 
 class TelegramBot:
     def __init__(self):
@@ -29,15 +25,6 @@ class TelegramBot:
         
         # Registrar manejadores
         self.register_handlers()
-        
-        # Cargar modelo Whisper
-        global model
-        try:
-            model = whisper.load_model("base")
-            logger.info("Modelo Whisper cargado correctamente")
-        except Exception as e:
-            logger.error(f"Error cargando modelo Whisper: {e}")
-            logger.warning("El bot funcionará sin capacidad de procesamiento de voz")
         
         logger.info("Bot de Telegram inicializado")
     
@@ -92,12 +79,6 @@ class TelegramBot:
         update.message.reply_text("Procesando tu mensaje de voz...")
         
         try:
-            # Verificar si el modelo está cargado
-            global model
-            if model is None:
-                update.message.reply_text("Lo siento, el procesamiento de voz no está disponible en este momento.")
-                return
-            
             # Descargar el archivo de voz
             voice_file = context.bot.get_file(update.message.voice.file_id)
             
@@ -106,22 +87,11 @@ class TelegramBot:
                 voice_file.download(custom_path=temp_file.name)
                 temp_path = temp_file.name
             
-            # Transcribir el audio con Whisper
-            result = model.transcribe(temp_path)
-            transcription = result["text"].strip()
+            # Enviar el archivo al server-ai para procesamiento
+            self.service.process_audio_file(update, temp_path)
             
             # Eliminar el archivo temporal
             os.unlink(temp_path)
-            
-            if not transcription:
-                update.message.reply_text("Lo siento, no pude entender el audio. ¿Podrías intentarlo de nuevo?")
-                return
-            
-            # Mostrar la transcripción
-            update.message.reply_text(f"Entendí: '{transcription}'")
-            
-            # Procesar la solicitud de bebida
-            self.service.process_drink_request(update, transcription)
             
         except Exception as e:
             logger.error(f"Error procesando mensaje de voz: {e}")
