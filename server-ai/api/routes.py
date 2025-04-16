@@ -1,4 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
+import tempfile
+import os
+import whisper
 from .models import Command, DrinkInstructions, DrinkRequest, DrinkResponse, Ingredient
 from agents.ollama_agent import OllamaAgent
 from db.crud import get_all_motors, get_motor_by_device, update_motor_content, update_motor_level, reset_motor_level
@@ -6,6 +9,9 @@ from .models import Motor, MotorUpdate
 
 router = APIRouter()
 ollama_agent = OllamaAgent()
+
+# Inicializar el modelo Whisper
+whisper_model = whisper.load_model("base")
 
 @router.post("/commands")
 async def process_command(command: Command):
@@ -35,6 +41,49 @@ async def analyze_drink(request: DrinkRequest):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# Endpoint para procesar audio y preparar bebidas
+@router.post("/audio", response_model=DrinkResponse)
+async def process_audio(audio: UploadFile = File(...)):
+    """Recibe un archivo de audio, lo transcribe y analiza para preparar una bebida"""
+    try:
+        # Crear un archivo temporal para almacenar el audio recibido
+        with tempfile.NamedTemporaryFile(suffix='.ogg', delete=False) as temp_audio:
+            # Escribir el contenido del archivo subido al temporal
+            content = await audio.read()
+            temp_audio.write(content)
+            temp_path = temp_audio.name
+
+        try:
+            # Transcribir el audio con Whisper
+            result = whisper_model.transcribe(temp_path)
+            transcription = result["text"].strip()
+            
+            if not transcription:
+                raise HTTPException(status_code=400, detail="No se pudo transcribir el audio")
+            
+            # Usar el agente de Ollama para analizar el texto transcrito
+            drink_instructions = ollama_agent.generate_drink_instructions(transcription)
+            
+            # Eliminar el archivo temporal
+            os.unlink(temp_path)
+            
+            # Devolver la respuesta con la misma estructura que el endpoint /drink
+            return DrinkResponse(
+                success=True,
+                message=f"Audio transcrito: '{transcription}'",
+                name=drink_instructions["name"],
+                description=drink_instructions["description"],
+                ingredients=drink_instructions["ingredients"]
+            )
+            
+        finally:
+            # Asegurarse de que el archivo se elimina incluso si hay errores
+            if os.path.exists(temp_path):
+                os.unlink(temp_path)
+                
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error procesando el audio: {str(e)}")
 
 @router.get("/motors", response_model=list[Motor])
 async def get_motors():
