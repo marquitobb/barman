@@ -9,12 +9,20 @@ class RelayController:
         GPIO.setup(self.relay_pin_one, GPIO.OUT)
         GPIO.setup(self.relay_pin_two, GPIO.OUT)
 
+        # Inicializar ambos relés como apagados (HIGH para relés activos en bajo)
+        GPIO.output(self.relay_pin_one, GPIO.HIGH)
+        GPIO.output(self.relay_pin_two, GPIO.HIGH)
+        print("Relés inicializados en estado apagado")
+
     def turn_on_relay_one(self, duration):
         GPIO.output(self.relay_pin_one, GPIO.LOW)
         print("Relay one turned on")
         time.sleep(duration)
         GPIO.output(self.relay_pin_one, GPIO.HIGH)
         print("Relay one turned off")
+
+        # Pequeña pausa para asegurar que los relés no se activen simultáneamente
+        time.sleep(0.5)
 
     def turn_on_relay_two(self, duration):
         GPIO.output(self.relay_pin_two, GPIO.LOW)
@@ -24,6 +32,9 @@ class RelayController:
         print("Relay two turned off")
 
     def cleanup(self):
+        # Asegurarse de que ambos relés estén apagados antes de limpiar
+        GPIO.output(self.relay_pin_one, GPIO.HIGH)
+        GPIO.output(self.relay_pin_two, GPIO.HIGH)
         GPIO.cleanup()
 
 if __name__ == "__main__":
