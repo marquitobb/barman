@@ -1,16 +1,12 @@
 # TODO: descoment this line after test
 # reconigtion voice
-#openai-whisper
 tqdm==4.66.4
 whisper
-pyttsx3
-sounddevice
-scipy
-
+python-telegram-bot==13.15
+dotenv
 
 # GPIO for raspberry pi
 # RPi.GPIO>=0.7.0
-pvporcupine
 requests
 pydantic
 
