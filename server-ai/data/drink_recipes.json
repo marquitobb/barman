@@ -9,11 +9,10 @@
     },
     "margarita": {
       "name": "Margarita",
-      "description": "Cóctel clásico mexicano a base de tequila, limón y triple sec",
+      "description": "Cóctel clásico mexicano a base de tequila, y soda (Squirt)",
       "ingredients": [
         {"name": "Tequila", "percentage": 60.0},
-        {"name": "Jugo de limón", "percentage": 30.0},
-        {"name": "Triple sec", "percentage": 10.0}
+        {"name": "Soda (squirt)", "percentage": 30.0}
       ]
     },
     "paloma": {

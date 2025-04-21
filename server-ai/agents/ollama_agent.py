@@ -5,7 +5,7 @@ import os
 from db.crud import get_all_motors, get_motor_by_device
 
 class OllamaAgent:
-    def __init__(self, model="llama3.2"):
+    def __init__(self, model="gemma3"):
         self.llm = Ollama(model=model)
         # Cargar base de conocimiento de recetas
         self.recipes_data = self._load_recipe_knowledge()
