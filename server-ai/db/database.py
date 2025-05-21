@@ -27,8 +27,7 @@ def init_db():
         if cursor.fetchone()[0] == 0:
             default_motors = [
                 (1, "Motor 1", "Tequila", "relay_one", 1000.0, 1000.0),
-                (2, "Motor 2", "Whisky", "relay_two", 1000.0, 1000.0),
-                (3, "Motor 3", "Soda (Squirt)", "relay_three", 1000.0, 1000.0)
+                (2, "Motor 2", "Soda (Squirt)", "relay_two", 1000.0, 1000.0)
             ]
             cursor.executemany(
                 "INSERT INTO motors (id, name, content, device, capacity, current_level) VALUES (?, ?, ?, ?, ?, ?)",

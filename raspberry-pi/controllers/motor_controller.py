@@ -66,9 +66,6 @@ class MotorController:
             print(f"Drink request: {drink_request}")
             ingredients = drink_request.get("ingredients")
             for ingredient in ingredients:
-                # Si el dispositivo es relay_three, cambiarlo a relay_two
-                if ingredient.get('device') == 'relay_three':
-                    ingredient['device'] = 'relay_two'
                 self.create_drink(ingredient)
             return True
         except Exception as e:
