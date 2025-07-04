@@ -8,7 +8,7 @@ class MotorController:
         # Define the flow rate for each device in ml/second
         self.flow_rates = {
             "relay_one": 20.0,   # 20 ml per second for relay one (tequila)
-            "relay_two": 30.0    # 30 ml per second for relay two (soda)
+            "relay_two": 40.0    # 40 ml per second for relay two (soda)
         }
         # Define GPIO pins for each relay
         self.relay_pins = {

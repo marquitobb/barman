@@ -6,6 +6,9 @@ Bot as a service to make drinks
 
 ![alt text](call.PNG)
 
+
+![alt text](barman_motors.jpg)
+
 ## Posible arquitecture
 
 ```
