@@ -101,10 +101,11 @@ class MotorController:
         print(f"Ingredient: {drink_data.get('name')} dispensed")
 
     # TODO: Implement the method to evaluate the size of the glass
+    # TODO: hice to have with camera validate the size of the glass
     def evaluate_size_glasse(self) -> int:
         # TODO: call api to evaluate the size of the glass
         # get_glass_size = self.api_client.get_glass_size()
 
         # TODO: return the size of the glass in milliliters
-        return 500
+        return 200
 

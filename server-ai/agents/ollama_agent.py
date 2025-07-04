@@ -92,7 +92,6 @@ class OllamaAgent:
                 "ingredients": [
                     {"name": available_motors[0]['content'], "percentage": 40.0, "device": available_motors[0]['device']},
                     {"name": available_motors[1]['content'], "percentage": 20.0, "device": available_motors[1]['device']},
-                    {"name": available_motors[2]['content'], "percentage": 40.0, "device": available_motors[2]['device']}
                 ]
             }
 

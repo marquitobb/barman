@@ -34,6 +34,15 @@
         {"name": "Jugo de limón", "percentage": 10.0},
         {"name": "Salsa picante", "percentage": 5.0}
       ]
+    },
+    "cuba_libre": {
+      "name": "Cuba Libre",
+      "description": "Cóctel clásico de ron con cola y limón",
+      "ingredients": [
+        {"name": "Ron", "percentage": 50.0},
+        {"name": "Cola", "percentage": 40.0},
+        {"name": "Jugo de limón", "percentage": 10.0}
+      ]
     }
   }
 }
